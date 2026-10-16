@@ -581,6 +581,43 @@
       100%{ transform:scale(1.75); opacity:0; }
     }
 
+    /* ---------- Botón de música de fondo ---------- */
+    .music-btn{
+      position:fixed; left:18px; bottom:18px; z-index:60;
+      width:52px; height:52px; padding:0; border-radius:50%;
+      border:1px solid rgba(194,161,77,.6);
+      display:grid; place-items:center; cursor:pointer;
+      background:linear-gradient(140deg,#fff,#F3F6EA);
+      color:var(--sage-deep); font-size:18px;
+      box-shadow:0 16px 32px -16px rgba(70,84,60,.6);
+      transition:transform .25s ease, background .35s ease, color .35s ease;
+    }
+    .music-btn:hover{ transform:translateY(-2px) scale(1.04); }
+    .music-btn i{ position:relative; z-index:2; }
+    .music-btn::before{
+      content:""; position:absolute; inset:0; border-radius:50%;
+      border:2px solid rgba(140,156,124,.5);
+      animation:ripple 2.8s ease-out infinite; pointer-events:none;
+    }
+    .music-btn.is-playing{
+      background:var(--grad-title); color:#fff; border-color:transparent;
+    }
+    .music-btn.is-playing::before{ display:none; }
+    .music-btn.is-playing i.fa-music{ display:none; }
+
+    .music-btn__bars{
+      display:none; position:absolute; gap:3px; align-items:flex-end; height:14px; z-index:2;
+    }
+    .music-btn.is-playing .music-btn__bars{ display:flex; }
+    .music-btn__bars b{
+      width:3px; height:6px; border-radius:2px; background:rgba(255,255,255,.92);
+      animation:eq 1s ease-in-out infinite;
+    }
+    .music-btn__bars b:nth-child(1){ animation-delay:0s; }
+    .music-btn__bars b:nth-child(2){ animation-delay:.18s; }
+    .music-btn__bars b:nth-child(3){ animation-delay:.36s; }
+    @keyframes eq{ 0%,100%{ height:5px; } 50%{ height:14px; } }
+
     /* =========================================================
        Reveal
        ========================================================= */
@@ -607,6 +644,7 @@
       .countdown{ gap:16px; }
       .venue-map iframe{ height:340px; }
       .float-wa{ right:28px; bottom:28px; }
+      .music-btn{ left:28px; bottom:28px; }
       .venue-video{ width:360px; }
     }
 
@@ -924,6 +962,11 @@
     <i class="fa-brands fa-whatsapp"></i>
   </a>
 
+  <button class="music-btn" id="musicBtn" type="button" aria-pressed="false" aria-label="Activar música de fondo">
+    <i class="fa-solid fa-music"></i>
+    <span class="music-btn__bars" aria-hidden="true"><b></b><b></b><b></b></span>
+  </button>
+
   <script>
     /* =========================================================
        CONFIGURACIÓN — EDITA AQUÍ
@@ -1024,6 +1067,69 @@
     playVideos();
     document.addEventListener("visibilitychange", () => { if (!document.hidden) playVideos(); });
 
+    /* ---------- Música de fondo ---------- */
+    const MUSIC_SRC = "assets/music.mp3";
+    const MUSIC_VOL = 0.55;
+    let music = null, musicOn = false, fadeTimer = null;
+    const musicBtn = $("#musicBtn");
+
+    function ensureMusic(){
+      if (!music){
+        music = new Audio(MUSIC_SRC);
+        music.loop = true;
+        music.preload = "auto";
+        music.volume = 0;
+      }
+      return music;
+    }
+
+    function setMusicUI(on){
+      musicBtn.classList.toggle("is-playing", on);
+      musicBtn.setAttribute("aria-pressed", on ? "true" : "false");
+      musicBtn.setAttribute("aria-label", on ? "Desactivar música de fondo" : "Activar música de fondo");
+    }
+
+    function fadeTo(target, ms){
+      clearInterval(fadeTimer);
+      const start = music.volume;
+      const steps = Math.max(1, Math.round(ms / 50));
+      let i = 0;
+      fadeTimer = setInterval(() => {
+        i++;
+        music.volume = Math.min(1, Math.max(0, start + (target - start) * (i / steps)));
+        if (i >= steps){ music.volume = target; clearInterval(fadeTimer); }
+      }, 50);
+    }
+
+    function startMusic(){
+      if (musicOn) return;
+      const m = ensureMusic();
+      const p = m.play();
+      const ok = () => { musicOn = true; setMusicUI(true); fadeTo(MUSIC_VOL, 2200); };
+      if (p && p.then) p.then(ok).catch(() => { /* requiere interacción del usuario */ });
+      else ok();
+    }
+
+    function stopMusic(){
+      if (!music) return;
+      musicOn = false;
+      setMusicUI(false);
+      fadeTo(0, 400);
+      setTimeout(() => { if (!musicOn && music) music.pause(); }, 420);
+    }
+
+    musicBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      musicOn ? stopMusic() : startMusic();
+    });
+
+    // Pausa la música si el usuario sale de la pestaña (y la reanuda al volver)
+    document.addEventListener("visibilitychange", () => {
+      if (!music) return;
+      if (document.hidden){ clearInterval(fadeTimer); music.pause(); }
+      else if (musicOn){ const p = music.play(); if (p && p.catch) p.catch(() => {}); }
+    });
+
     let opened = false;
     function openInvitation(){
       if (opened) return;
@@ -1042,18 +1148,34 @@
 
       leafBurst();
       playVideos();
+      startMusic();
       setTimeout(() => { env.style.display = "none"; }, 1700);
       window.scrollTo(0, 0);
+    }
+
+    // Si la invitación entra directo (sobre ya visto o sin animaciones),
+    // la música arranca con el primer toque del usuario.
+    function armAutoStart(){
+      const once = (e) => {
+        if (e && e.target && e.target.closest && e.target.closest("#musicBtn")) return;
+        startMusic();
+        document.removeEventListener("pointerdown", once, true);
+        document.removeEventListener("keydown", once, true);
+      };
+      document.addEventListener("pointerdown", once, true);
+      document.addEventListener("keydown", once, true);
     }
 
     if (prefersReduced){
       document.body.classList.remove("is-locked");
       $("#envelope").style.display = "none";
+      armAutoStart();
     } else {
       const env = $("#envelope");
       if (store.get() === "1"){
         document.body.classList.remove("is-locked");
         env.style.display = "none";
+        armAutoStart();
       }
       env.addEventListener("click", openInvitation);
       env.addEventListener("keydown", (e) => {
