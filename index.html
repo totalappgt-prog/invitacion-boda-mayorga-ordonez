@@ -120,7 +120,21 @@
         linear-gradient(160deg,#FEFDF9 0%,#EFF1E6 55%,#F6F1E1 100%);
       transition:opacity .8s ease, visibility .8s ease;
     }
-    .envelope.is-open{ opacity:0; visibility:hidden; pointer-events:none; }
+    .envelope.is-open{
+      opacity:0; visibility:hidden; pointer-events:none;
+      transition:opacity .5s ease 1.35s, visibility .5s ease 1.35s;
+    }
+    /* El contenido se desvanece ANTES que el fondo: evita que los textos del
+       sobre y del hero se encimen durante la transición. */
+    .envelope__head, .envelope__stage, .envelope__hint, .envelope__finger{
+      transition:opacity .35s ease;
+    }
+    .envelope.is-open .envelope__head,
+    .envelope.is-open .envelope__stage,
+    .envelope.is-open .envelope__hint,
+    .envelope.is-open .envelope__finger{
+      opacity:0; transition-delay:1.0s;
+    }
 
     .envelope__head{ position:relative; z-index:2; text-align:center; margin-bottom:22px; }
     .envelope__top{
@@ -159,7 +173,7 @@
       box-shadow:0 -8px 26px -14px rgba(70,84,60,.45);
       display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
       transform:translateY(8%);
-      transition:transform .95s cubic-bezier(.2,.75,.2,1) .4s;
+      transition:transform .8s cubic-bezier(.2,.75,.2,1) .3s;
     }
     .envelope.is-open .env__letter{ transform:translateY(-74%); }
     .env__letter-script{
@@ -179,7 +193,7 @@
       background:linear-gradient(180deg,#CFD9C2,#B4C2A4);
       clip-path:polygon(0 0,100% 0,50% 100%);
       transform-origin:top center;
-      transition:transform .8s cubic-bezier(.45,.05,.25,1);
+      transition:transform .7s cubic-bezier(.45,.05,.25,1);
       backface-visibility:hidden;
     }
     .envelope.is-open .env__flap{ transform:rotateX(-180deg); z-index:0; }
@@ -313,8 +327,8 @@
     .hero__title .w:nth-child(1){ animation-delay:.10s; }
     .hero__title .w:nth-child(2){ animation-delay:.32s; }
     @keyframes wordUp{
-      0%{ opacity:0; transform:translateY(26px) scale(.94); filter:blur(6px); }
-      100%{ opacity:1; transform:none; filter:blur(0); }
+      0%{ opacity:0; transform:translateY(20px); }
+      100%{ opacity:1; transform:none; }
     }
 
     .hero__names{
@@ -1140,16 +1154,17 @@
       env.classList.add("is-open");
       document.body.classList.remove("is-locked");
 
+      // El hero entra en cascada DESPUÉS de que el sobre terminó de desvanecerse
       $$(".hero .reveal").forEach((el) => el.classList.remove("is-visible"));
       setTimeout(() => {
         $$(".hero .reveal").forEach((el, i) =>
           setTimeout(() => el.classList.add("is-visible"), 110 * i));
-      }, 850);
+      }, 1400);
 
       leafBurst();
       playVideos();
       startMusic();
-      setTimeout(() => { env.style.display = "none"; }, 1700);
+      setTimeout(() => { env.style.display = "none"; }, 2050);
       window.scrollTo(0, 0);
     }
 
@@ -1177,6 +1192,8 @@
         env.style.display = "none";
         armAutoStart();
       }
+      // Arranca la música en el primer contacto (más confiable en iOS)
+      env.addEventListener("pointerdown", startMusic);
       env.addEventListener("click", openInvitation);
       env.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " " || e.key === "Spacebar"){ e.preventDefault(); openInvitation(); }
