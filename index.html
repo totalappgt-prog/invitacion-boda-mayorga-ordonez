@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#FBF9F3" />
   <title>Nuestra Boda · Irvin Mayorga &amp; Nancy Ordóñez</title>
-  <meta name="description" content="Nos complace invitarlos a la celebración de nuestra Boda. Sábado 21 de noviembre de 2026 · 4:00 PM · Jardín Los Ángeles, Km 19 Carretera al Atlántico." />
+  <meta name="description" content="Con la bendición de Dios nos complace invitarlos a nuestra boda. Sábado 21 de noviembre de 2026 · 4:00 PM · Jardines Los Ángeles, Km 19 Carretera al Atlántico." />
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Nuestra Boda · Irvin Mayorga &amp; Nancy Ordóñez" />
@@ -292,26 +292,27 @@
     }
     .hero__content{ position:relative; z-index:2; width:min(720px,92vw); }
 
-    /* Camafeo animado de los novios */
+    /* Portada: foto cuadrada de los novios */
     .hero__couple{
       position:relative; z-index:1;
-      width:min(64vw,260px); margin:0 auto 4px;
-      aspect-ratio:1/1; border-radius:50%;
+      width:min(72vw,290px); margin:0 auto 10px;
+      aspect-ratio:1/1; border-radius:16px;
       overflow:hidden;
-      border:1px solid rgba(194,161,77,.55);
+      border:1px solid rgba(194,161,77,.6);
       background:linear-gradient(180deg,#fff,#F6F8EF);
-      box-shadow:0 28px 60px -28px rgba(70,84,60,.55), inset 0 0 0 8px rgba(255,255,255,.8);
+      box-shadow:0 28px 60px -28px rgba(70,84,60,.6), inset 0 0 0 7px rgba(255,255,255,.75);
       animation:floaty 7s ease-in-out infinite;
     }
     .hero__couple::after{
-      content:""; position:absolute; inset:9px; border-radius:50%;
-      border:1px dashed rgba(140,156,124,.5); pointer-events:none;
+      content:""; position:absolute; inset:9px; border-radius:9px;
+      border:1px solid rgba(194,161,77,.55); pointer-events:none;
     }
-    .hero__video{
+    .hero__photo{
       width:100%; height:100%; display:block;
-      object-fit:cover; object-position:center 66%;
-      pointer-events:none;
+      object-fit:cover; object-position:56% 50%;
     }
+    /* Miniatura del video en su sección */
+    .venue-video .hero__video{ width:100%; height:auto; display:block; }
 
     .hero__eyebrow{ font-size:clamp(9px,2.6vw,11px); letter-spacing:.44em; text-transform:uppercase; color:var(--sage-deep); margin:0 0 8px; }
     .hero__title{
@@ -571,6 +572,25 @@
     }
     .closing__note{ font-size:12px; letter-spacing:.26em; text-transform:uppercase; color:var(--ink-soft); }
 
+    /* Último versículo */
+    .final-verse{
+      position:relative; margin:34px auto 0; max-width:44ch;
+      padding:26px 22px; border-radius:16px;
+      background:linear-gradient(180deg,#fff,#F7F9F0);
+      border:1px solid rgba(194,161,77,.5);
+      box-shadow:var(--shadow-soft);
+    }
+    .final-verse__icon{ color:var(--gold); font-size:18px; margin-bottom:10px; }
+    .final-verse p{
+      margin:0; font-family:var(--font-serif); font-style:italic;
+      font-size:clamp(16px,4.4vw,20px); line-height:1.7; color:var(--ink);
+    }
+    .final-verse__ref{
+      display:block; margin-top:12px;
+      font-family:var(--font-sans); font-style:normal;
+      font-size:11px; letter-spacing:.28em; text-transform:uppercase; color:var(--sage-deep);
+    }
+
     .footer{
       text-align:center; padding:26px 20px 34px;
       background:#E4E9D4; color:var(--ink-soft); font-size:12px; letter-spacing:.12em;
@@ -742,11 +762,8 @@
 
       <div class="hero__content">
         <div class="hero__couple reveal">
-          <video class="hero__video" id="coupleVideo"
-                 autoplay muted loop playsinline preload="auto"
-                 poster="assets/video-poster.jpg" aria-label="Ilustración animada de los novios">
-            <source src="assets/video.mp4" type="video/mp4" />
-          </video>
+          <img class="hero__photo" src="assets/foto-boda.jpg"
+               alt="Irvin y Nancy" width="900" height="900" />
         </div>
 
         <p class="hero__eyebrow reveal d1">Con la bendición de Dios</p>
@@ -759,7 +776,7 @@
         <div class="ornament reveal d2"><span></span><i class="fa-solid fa-ring"></i><span></span></div>
 
         <p class="hero__phrase reveal d3">
-          “Después de tantas risas, sueños y aventuras decidimos decir sí para siempre.”
+          Nos complace invitarlos a la celebración de nuestra boda.
         </p>
 
         <div class="hero__date reveal d3">
@@ -876,9 +893,9 @@
           <article class="card place reveal reveal--left d1" style="text-align:left">
             <div class="place__icon"><i class="fa-solid fa-church"></i></div>
             <h3>Celebración</h3>
-            <p class="place__time"><i class="fa-regular fa-clock"></i> 4:00 de la tarde</p>
-            <p class="place__venue">Jardín Los Ángeles</p>
-            <p class="place__addr">Kilómetro 19 Carretera al Atlántico, Guatemala</p>
+            <p class="place__time"><i class="fa-regular fa-clock"></i> 4:00 PM · 16:00 hrs</p>
+            <p class="place__venue">Jardines Los Ángeles</p>
+            <p class="place__addr">Kilómetro 19, Carretera al Atlántico (ruta al Atlántico), Guatemala</p>
             <div class="map-actions">
               <a class="btn btn--primary" id="mapsBtn" href="#" target="_blank" rel="noopener">
                 <i class="fa-solid fa-map-location-dot"></i> Ver ubicación
@@ -893,8 +910,8 @@
             <div class="place__icon"><i class="fa-solid fa-location-dot"></i></div>
             <h3>El lugar</h3>
             <p class="place__time"><i class="fa-regular fa-clock"></i> Te esperamos puntual</p>
-            <p class="place__venue">Jardín Los Ángeles</p>
-            <p class="place__addr">Kilómetro 19 Carretera al Atlántico, Guatemala</p>
+            <p class="place__venue">Jardines Los Ángeles</p>
+            <p class="place__addr">Kilómetro 19, Carretera al Atlántico (ruta al Atlántico), Guatemala</p>
             <p class="place__note">
               <i class="fa-solid fa-seedling" style="color:var(--sage)"></i>
               Un jardín al aire libre, rodeado de naturaleza. Te recomendamos calzado cómodo.
@@ -924,9 +941,9 @@
           <p>
             “Haz de nuestro matrimonio un reflejo de tu presencia, que sepamos perdonarnos, sostenernos y cuidarnos,
             y que en cada prueba aprendamos a dar la vida el uno por el otro, para que nuestro amor dé fruto y
-            nuestra alegría sea plena.”
+            nuestra vida sea plena.”
           </p>
-          <p class="ref">Juan 15: 9 - 17</p>
+          <p class="ref">Inspirado en el versículo Juan 15: 9 - 17</p>
         </div>
       </div>
     </section>
@@ -958,12 +975,15 @@
 
       <div class="wrap text-center">
         <div class="ornament reveal"><span></span><i class="fa-solid fa-heart"></i><span></span></div>
-        <p class="reveal d1 serif" style="font-style:italic;font-size:clamp(17px,4.6vw,21px);color:var(--ink);max-width:36ch;margin:0 auto;">
-          “Y sobre todo, amen.”<br />
-          <span style="font-size:14px;color:var(--ink-soft)">1 Pedro 4:8</span>
-        </p>
-        <p class="closing__signature reveal d2">Irvin &amp; Nancy</p>
-        <p class="closing__note reveal d3">21 de Noviembre 2026</p>
+        <p class="closing__signature reveal d1">Irvin &amp; Nancy</p>
+        <p class="closing__note reveal d2">21 de Noviembre 2026</p>
+
+        <!-- Último versículo de la invitación -->
+        <div class="final-verse reveal d3">
+          <i class="fa-solid fa-book-bible final-verse__icon" aria-hidden="true"></i>
+          <p>“Y sobre todas estas cosas, vístanse de amor, que es el vínculo perfecto.”</p>
+          <span class="final-verse__ref">Colosenses 3:14</span>
+        </div>
       </div>
     </section>
   </main>
@@ -993,7 +1013,7 @@
       whatsapp: "50237767192",
       whatsappMsg: "¡Hola! Confirmo mi asistencia a la boda de Irvin y Nancy 💍",
 
-      venueQuery: "Jardín Los Ángeles, Kilómetro 19 Carretera al Atlántico, Guatemala",
+      venueQuery: "Jardines Los Ángeles, Kilómetro 19 Carretera al Atlántico, Guatemala",
       calendarTitle: "Boda de Irvin Mayorga & Nancy Ordóñez"
     };
 
