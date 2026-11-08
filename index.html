@@ -14,6 +14,9 @@
 
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💍</text></svg>" />
 
+  <!-- Precarga la foto de portada para que el hero entre sin tirón -->
+  <link rel="preload" as="image" href="assets/foto-boda.jpg" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -92,7 +95,7 @@
     .petals{ position:fixed; inset:0; z-index:3; pointer-events:none; overflow:hidden; }
     .petal{
       position:absolute; top:-70px; opacity:.5;
-      animation:fall linear infinite; will-change:transform;
+      animation:fall linear infinite;
     }
     .petal svg{ width:100%; height:100%; display:block; }
     @keyframes fall{
@@ -353,9 +356,8 @@
       flex-wrap:wrap;
       margin:24px 0 6px; padding:11px 18px;
       border-radius:999px;
-      background:rgba(255,255,255,.75);
+      background:rgba(255,255,255,.92);
       border:1px solid rgba(194,161,77,.55);
-      backdrop-filter:blur(4px);
       font-size:clamp(10.5px,3.1vw,14px); letter-spacing:.1em;
       text-transform:uppercase; font-weight:500; color:var(--ink);
       max-width:94vw; text-align:center;
@@ -514,9 +516,8 @@
       position:absolute; left:14px; bottom:14px;
       display:inline-flex; align-items:center; gap:8px;
       padding:8px 14px; border-radius:999px;
-      background:rgba(51,64,47,.62); color:#fff;
+      background:rgba(51,64,47,.82); color:#fff;
       font-size:11px; letter-spacing:.16em; text-transform:uppercase; font-weight:600;
-      backdrop-filter:blur(6px);
     }
 
     /* =========================================================
@@ -1377,10 +1378,10 @@
       leafLayer.appendChild(s);
       if (!falling) setTimeout(() => s.remove(), 4200);
     }
-    function leafBurst(){ for (let i = 0; i < 20; i++) makeLeaf(false); }
+    function leafBurst(){ for (let i = 0; i < 12; i++) makeLeaf(false); }
 
     if (!prefersReduced){
-      const count = window.innerWidth < 700 ? 12 : 22;
+      const count = window.innerWidth < 700 ? 8 : 16;
       for (let i = 0; i < count; i++) makeLeaf(true);
     }
   </script>
