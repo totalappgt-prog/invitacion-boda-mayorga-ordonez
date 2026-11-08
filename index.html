@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#FBF9F3" />
   <title>Nuestra Boda · Irvin Mayorga &amp; Nancy Ordóñez</title>
-  <meta name="description" content="Con la bendición de Dios nos complace invitarlos a nuestra boda. Sábado 21 de noviembre de 2026 · 4:00 PM · Jardines Los Ángeles, Km 19 Carretera al Atlántico." />
+  <meta name="description" content="Con la bendición de Dios nos complace invitarlos a nuestra boda. Sábado 21 de noviembre de 2026 · 4:00 PM · Jardín De Los Ángeles, El Fiscal, Km 19 Carretera a San José del Golfo." />
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Nuestra Boda · Irvin Mayorga &amp; Nancy Ordóñez" />
@@ -894,8 +894,8 @@
             <div class="place__icon"><i class="fa-solid fa-church"></i></div>
             <h3>Celebración</h3>
             <p class="place__time"><i class="fa-regular fa-clock"></i> 4:00 PM · 16:00 hrs</p>
-            <p class="place__venue">Jardines Los Ángeles</p>
-            <p class="place__addr">Kilómetro 19, Carretera al Atlántico (ruta al Atlántico), Guatemala</p>
+            <p class="place__venue">Jardín De Los Ángeles</p>
+            <p class="place__addr">El Fiscal, Aldea El Fiscal · Km 19 Carretera a San José del Golfo, Guatemala</p>
             <div class="map-actions">
               <a class="btn btn--primary" id="mapsBtn" href="#" target="_blank" rel="noopener">
                 <i class="fa-solid fa-map-location-dot"></i> Ver ubicación
@@ -910,8 +910,8 @@
             <div class="place__icon"><i class="fa-solid fa-location-dot"></i></div>
             <h3>El lugar</h3>
             <p class="place__time"><i class="fa-regular fa-clock"></i> Te esperamos puntual</p>
-            <p class="place__venue">Jardines Los Ángeles</p>
-            <p class="place__addr">Kilómetro 19, Carretera al Atlántico (ruta al Atlántico), Guatemala</p>
+            <p class="place__venue">Jardín De Los Ángeles</p>
+            <p class="place__addr">El Fiscal, Aldea El Fiscal · Km 19 Carretera a San José del Golfo, Guatemala</p>
             <p class="place__note">
               <i class="fa-solid fa-seedling" style="color:var(--sage)"></i>
               Un jardín al aire libre, rodeado de naturaleza. Te recomendamos calzado cómodo.
@@ -981,8 +981,8 @@
         <!-- Último versículo de la invitación -->
         <div class="final-verse reveal d3">
           <i class="fa-solid fa-book-bible final-verse__icon" aria-hidden="true"></i>
-          <p>“Y sobre todas estas cosas, vístanse de amor, que es el vínculo perfecto.”</p>
-          <span class="final-verse__ref">Colosenses 3:14</span>
+          <p>“Y si alguno prevaleciere contra uno, dos le resistirán; y cordón de tres dobleces no se rompe pronto.”</p>
+          <span class="final-verse__ref">Eclesiastés 4:12</span>
         </div>
       </div>
     </section>
@@ -1013,7 +1013,9 @@
       whatsapp: "50237767192",
       whatsappMsg: "¡Hola! Confirmo mi asistencia a la boda de Irvin y Nancy 💍",
 
-      venueQuery: "Jardines Los Ángeles, Kilómetro 19 Carretera al Atlántico, Guatemala",
+      venueQuery: "Jardín De Los Ángeles, El Fiscal, Aldea El Fiscal, Km 19 Carretera a San José del Golfo, Guatemala",
+      venueLat: "14.7082103",
+      venueLng: "-90.3991324",
       calendarTitle: "Boda de Irvin Mayorga & Nancy Ordóñez"
     };
 
@@ -1023,14 +1025,14 @@
     const enc = (s) => encodeURIComponent(s);
     const waLink = (msg) => `https://wa.me/${CONFIG.whatsapp}?text=${enc(msg)}`;
 
-    /* ---------- Mapas ---------- */
-    const q = CONFIG.venueQuery;
-    const gmaps = `https://www.google.com/maps/search/?api=1&query=${enc(q)}`;
-    const waze  = `https://waze.com/ul?q=${enc(q)}&navigate=yes`;
+    /* ---------- Mapas (coordenadas exactas del lugar) ---------- */
+    const coords = CONFIG.venueLat + "," + CONFIG.venueLng;
+    const gmaps = `https://www.google.com/maps/search/?api=1&query=${enc(coords)}`;
+    const waze  = `https://waze.com/ul?ll=${enc(coords)}&navigate=yes`;
 
     ["#mapsBtn", "#mapsBtn2"].forEach((s) => { const el = $(s); if (el) el.href = gmaps; });
     const wb = $("#wazeBtn"); if (wb) wb.href = waze;
-    $("#venueMap").src = `https://www.google.com/maps?q=${enc(q)}&z=15&hl=es&output=embed`;
+    $("#venueMap").src = `https://www.google.com/maps?q=${enc(coords)}&z=16&hl=es&output=embed`;
 
     /* ---------- WhatsApp ---------- */
     const wa = waLink(CONFIG.whatsappMsg);
