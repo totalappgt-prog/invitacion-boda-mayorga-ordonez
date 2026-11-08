@@ -499,15 +499,17 @@
     .venue-map{ margin-top:22px; border-radius:var(--radius); overflow:hidden; border:1px solid rgba(194,161,77,.45); box-shadow:var(--shadow-card); }
     .venue-map iframe{ width:100%; height:280px; border:0; display:block; }
 
-    /* ---------- Video del lugar ---------- */
+    /* ---------- Foto enmarcada ---------- */
     .venue-video{
-      position:relative; margin:24px auto 0; width:min(320px,80vw);
+      position:relative; margin:24px auto 0; width:min(340px,82vw);
       border-radius:22px; overflow:hidden;
-      border:1px solid rgba(194,161,77,.5);
+      border:1px solid rgba(194,161,77,.55);
       box-shadow:0 30px 70px -30px rgba(70,84,60,.55);
       background:linear-gradient(180deg,#fff,#F4F6EC);
+      padding:10px;
     }
-    .venue-video video{ width:100%; height:auto; display:block; }
+    .venue-video img,
+    .venue-video video{ width:100%; height:auto; display:block; border-radius:14px; }
     .venue-video__tag{
       position:absolute; left:14px; bottom:14px;
       display:inline-flex; align-items:center; gap:8px;
@@ -867,10 +869,9 @@
         <div class="ornament reveal d1"><span></span><i class="fa-solid fa-heart"></i><span></span></div>
 
         <div class="venue-video reveal d2">
-          <video id="venueVideo" autoplay muted loop playsinline preload="metadata" poster="assets/video-poster.jpg">
-            <source src="assets/video.mp4" type="video/mp4" />
-          </video>
-          <span class="venue-video__tag"><i class="fa-solid fa-video"></i> Irvin &amp; Nancy</span>
+          <img src="assets/foto-anillos.png" alt="Las manos de Irvin y Nancy con el anillo"
+               width="386" height="424" loading="lazy" />
+          <span class="venue-video__tag"><i class="fa-solid fa-ring"></i> Irvin &amp; Nancy</span>
         </div>
       </div>
     </section>
