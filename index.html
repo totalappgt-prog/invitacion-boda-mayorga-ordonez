@@ -593,6 +593,22 @@
       font-size:11px; letter-spacing:.28em; text-transform:uppercase; color:var(--sage-deep);
     }
 
+    /* Nudo en forma de corazón, enmarcado */
+    .final-knot{
+      margin:26px auto 0; width:min(200px,52vw);
+      padding:8px; border-radius:14px;
+      background:#fff;
+      border:1px solid rgba(194,161,77,.55);
+      box-shadow:0 18px 40px -26px rgba(70,84,60,.5);
+    }
+    .final-knot img{ width:100%; height:auto; display:block; border-radius:9px; }
+    .final-knot__phrase{
+      margin:16px auto 0; max-width:32ch;
+      font-family:var(--font-serif); font-weight:700;
+      font-size:clamp(17px,4.6vw,21px); line-height:1.4;
+      letter-spacing:.01em; color:var(--sage-deep);
+    }
+
     .footer{
       text-align:center; padding:26px 20px 34px;
       background:#E4E9D4; color:var(--ink-soft); font-size:12px; letter-spacing:.12em;
@@ -985,6 +1001,12 @@
           <p>“Y si alguno prevaleciere contra uno, dos le resistirán; y cordón de tres dobleces no se rompe pronto.”</p>
           <span class="final-verse__ref">Eclesiastés 4:12</span>
         </div>
+
+        <div class="final-knot reveal d3">
+          <img src="assets/nudo-corazon.png" alt="Nudo en forma de corazón"
+               width="288" height="312" loading="lazy" />
+        </div>
+        <p class="final-knot__phrase reveal d3">Nosotros + Dios = Amor que Permanece</p>
       </div>
     </section>
   </main>
